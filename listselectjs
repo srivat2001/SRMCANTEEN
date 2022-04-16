@@ -1,0 +1,366 @@
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <!-- Select2 CSS --> 
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" /> 
+
+<!-- jQuery --> <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+
+<!-- Select2 JS --> 
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+<style>
+    body{
+        margin: 0px;
+        padding: 0px;
+          align-items: center;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+        background-color: #303030;
+    }    
+    .loginform{
+       background-color: white;
+       width:350px;
+padding-top: 5px;
+        padding-bottom: 20px;
+        border-radius: 20px;
+        box-shadow: 20px 20px black;
+        font-family: "segoe ui";
+        color: #525252;
+    }
+    .idinput{
+        height: 50px; 
+        width: 90%;
+        margin:1rem;
+          transition: all 0.3s ease 0s;
+        padding: 1rem;
+            border-radius: 10px;
+        border: none;
+        border-bottom: 1px solid  #bdbdbd;
+        outline: none;
+    }
+    .idinput:focus{
+         animation: animate 1s linear forwards;
+         border-bottom: 3px solid  darkred;
+        outline: none;
+      transform: translateY(-7px);
+
+    }    
+    .idinput:focus + .logo {
+
+transform: translateY(-7px);
+    }    
+    ::placeholder {
+  color:  black;
+}
+    form{
+        position: relative;
+        
+    }
+.wrap {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button {
+  width: 100px;
+  height: 30px;
+    margin: 0px;
+    margin-left: 1rem;
+  font-family: 'Roboto', sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  font-weight: 500;
+  color: #000;
+  background-color: #fff;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;
+  }
+
+.button:hover {
+  background-color: #2EE59D;
+  box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+  color: #fff;
+ 
+}
+    button{
+        
+        margin: 0px;
+    }
+    .cusno{
+        
+        margin: 1rem;
+    }
+    .logo{
+        position: relative;
+        top:5px;
+        margin-left: auto;
+        margin-right: 20px;
+    }
+    :root {
+  --background-gradient: linear-gradient(30deg, #f39c12 30%, #f1c40f);
+
+ 
+}
+
+
+/* Remove IE arrow */
+select::-ms-expand {
+  display: none;
+}
+/* Custom Select wrapper */
+.select {
+  position: relative;
+  display: flex;
+  width: 15em;
+  height: 3em;
+
+  
+
+  overflow: hidden;
+}
+/* Arrow */
+.select::after {
+  content: '\25BC';
+
+  border-bottom-right-radius: 10px;  
+  padding: 1em;
+   border-bottom: 1px solid  #bdbdbd;
+  transition: .25s all ease;
+  pointer-events: none;
+}
+/* Transition */
+.select:hover::after {
+  color: #f39c12;
+}
+
+/* Other styles*/
+body {
+ 
+  background: var(--background-gradient);
+}
+h1 {
+  margin: 0 0 0.25em;
+}
+a {
+  font-weight: bold;
+  color: var(--gray);
+  text-decoration: none;
+  padding: .25em;
+  border-radius: .25em;
+  background: white;
+}
+    .selectcontainer{
+        
+        margin: 1rem;
+        display: flex;
+    }
+    #time{
+        
+        
+    
+        
+    }
+    .downdetails{
+            padding-left: 15px;
+
+        font-size: 13px;
+        display: flex;
+        
+    }
+    .note{
+        
+        margin-left: auto;
+        padding-right: 20px;
+        font-size: 11px;
+    }
+    .xclose{
+        
+       
+        position: relative;
+        top: 3;
+        left:13;
+          border-radius: 50%;
+        font-size: 15px;
+   
+        font-weight: 400;
+    }
+        .xclose:hover{
+        background-color: azure;
+            border-radius: 50%;
+       color: red;
+cursor: pointer;
+    }
+    #additem{
+        
+        margin-left: 1rem;
+        margin-bottom: 1rem;
+    }
+    .rate{
+        
+        
+        position: relative;
+        top:3;
+        left:8;
+        font-size: 15px;
+    }
+    </style>    
+</head>
+
+    <div class="loginform">
+ 
+      
+              <form type="post" enctype="multipart/form-data">
+         <div style="display:flex;">
+     
+    <h6 class="cusno"> Hi, 19205107 <br>
+        What You would Link to order?</h6>  <img class="logo" src="onlylogo.png" width="60px" height="50px"> </div>
+<div id="orderlistcontainer">
+
+ </div>
+
+        
+        </form>
+          <button id="additem" onclick="additems()" class="button">add item</button>
+       <div class="downdetails"> <div id="time">12:30</div><div class="note">Order Intake Closes in 12:30PM</div></div>       
+        
+<script>
+function sleep(milliseconds) {
+    return new Promise(resolve => setTimeout(resolve, milliseconds));
+}
+var cloneCount = 1;
+$(document).ready(async function() {
+    var div = document.createElement("div");
+    var theid ='itemnum' + cloneCount.toString();
+    div.className = "selectcontainer "+theid;
+    div.id = theid;
+    cloneCount = cloneCount + 1;
+           $.post("test1.php",{
+           elntid : theid
+       },function(data,status){
+           
+          div.innerHTML = data;
+           
+       })
+
+    document.getElementById("orderlistcontainer").appendChild(div);
+    await sleep(100);
+    $(".selUser").select2();
+
+});
+
+
+
+async function additems() {
+    var div = document.createElement("div");
+    var theid ='itemnum' + cloneCount.toString();
+    div.className = "selectcontainer "+theid;
+    div.id = theid;
+    cloneCount = cloneCount + 1;
+           $.post("test1.php",{
+           elntid : theid
+       },function(data,status){
+           
+          div.innerHTML = data;
+           
+       })
+
+    document.getElementById("orderlistcontainer").appendChild(div);
+    await sleep(100);
+    $(".selUser").select2();
+}
+        </script>   
+        
+        
+        
+<script>
+function checkTime(i) {
+    if (i < 10) {
+        i = "0" + i;
+    }
+    return i;
+}
+function startTime() {
+    var today = new Date();
+    var h = today.getHours();
+    var m = today.getMinutes();
+    var s = today.getSeconds();
+    // add a zero in front of numbers<10
+    m = checkTime(m);
+    s = checkTime(s);
+    document.getElementById('time').innerHTML = h + ":" + m + ":" + s;
+    t = setTimeout(function() {
+        startTime()
+    }, 500);
+}
+startTime();         
+</script>  
+<script>
+        
+     function removeelement(obj){
+           
+         alert(obj.id);
+          var elem = document.getElementsByClassName("selectcontainer "+obj.id)[0];
+            elem.parentNode.removeChild(elem);
+         
+     }   
+        
+        
+      function thehere(){
+          
+          alert("test");
+      }  
+        
+        
+        
+        
+        </script>        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+     <style>
+         select {
+
+        border-bottom-left-radius: 10px; 
+}
+        </style>   
+        
+        
+     
+        
+
+        
+        
+        
+        
+        
+        
+        
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</html>
